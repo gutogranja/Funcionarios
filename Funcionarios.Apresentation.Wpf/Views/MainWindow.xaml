@@ -1,0 +1,83 @@
+﻿<Controls:MetroWindow x:Class="Funcionarios.Apresentation.Wpf.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls" 
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        Dialog:DialogParticipation.Register="{Binding}"
+        xmlns:local="clr-namespace:Funcionarios.Apresentation.Wpf"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:Converter="clr-namespace:Funcionarios.Apresentation.Wpf.Views.Converters"                     
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto" 
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Cadastro de funcionários" Height="650" Width="800" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <Converter:StringToNumericConverter x:Key="Converters"></Converter:StringToNumericConverter>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Nome"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Idade"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Cargo"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Endereço"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Bairro"/>
+            <TextBlock Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="15" Text="Cidade"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Margin="5" IsEnabled="{Binding EditarFuncionario}" Text="{Binding View.Nome, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Nome funcionário" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding View.Idade, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Converters}}" materialDesign:HintAssist.Hint="Idade"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding View.Carga, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Cargo" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Margin="5" Text="{Binding View.Endereco, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Endereço"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Margin="5" Text="{Binding View.Bairro, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Bairro"/>
+            <TextBox Grid.Row="5" Grid.Column="1" Margin="5" Text="{Binding View.Cidade, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Cidade"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <DataGrid SelectedItem="{Binding View}" ItemsSource="{Binding ListaFuncionario}" BorderThickness="3" BorderBrush="Black" GridLinesVisibility="All" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Funcionário" Binding="{Binding Nome,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="250"/>
+                    <DataGridTextColumn Header="Idade" Binding="{Binding Idade,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                    <DataGridTextColumn Header="Cargo" Binding="{Binding Cargo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                    <DataGridTextColumn Header="Endereço" Binding="{Binding Endereco,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="250"/>
+                    <DataGridTextColumn Header="Bairro" Binding="{Binding Bairro,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="250"/>
+                    <DataGridTextColumn Header="Cidade" Binding="{Binding Cidade,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="250"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <Button Content="INCLUIR" Margin="5" ToolTip="Incluir dados do funcionário" Command="{Binding IncluirCommand}"/>
+                <Button Content="ALTERAR" Margin="5" ToolTip="Alterar dados do funcionário" Command="{Binding AlterarCommand}"/>
+                <Button Content="INATIVAR" Margin="5" ToolTip="Inativar o funcionário" Command="{Binding InativarCommand}"/>
+            </StackPanel>
+            <Button Grid.Column="1" Content="LIMPAR" Margin="5" ToolTip="Limpar dados da tela" Command="{Binding LimparTelaCommand}" HorizontalAlignment="Right"/>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>
